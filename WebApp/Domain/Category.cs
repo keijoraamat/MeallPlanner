@@ -9,7 +9,7 @@ public class Category: BaseEntity
     public string CategoryName { get; set; } = default!;
 
     [MaxLength(2000)]
-    public string Description { get; set; } = default!;
+    public string? Description { get; set; }
 
     public ICollection<IngredientInCategory>? IngredientInCategories { get; set; }
 }

@@ -14,7 +14,7 @@ public class Recipe: BaseEntity
     [MaxLength(9588)]
     public string Instructions { get; set; } = default!;
 
-    public int DefaultServings { get; set; }
+    public int? DefaultServings { get; set; }
     
     public int PrepMinutes { get; set; }
     

@@ -11,7 +11,7 @@ public class Ingredient: BaseEntity
     [MaxLength(50)]
     public string State { get; set; } = default!;
     
-    public float Density { get; set; } = default!;
+    public float? Density { get; set; } = default!;
 
     public ICollection<IngredientInRecipe>? IngredientInRecipes { get; set; }
     public ICollection<IngredientInCategory>? IngredientInCategories { get; set; }

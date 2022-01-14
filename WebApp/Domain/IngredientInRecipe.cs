@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Domain;
 
-public class IngredientInRecipe
+public class IngredientInRecipe: BaseEntity
 {
     [Required(ErrorMessage = "The field {0} is required")]
     public int Weight { get; set; }
