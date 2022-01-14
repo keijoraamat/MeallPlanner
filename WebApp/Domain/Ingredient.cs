@@ -9,9 +9,10 @@ public class Ingredient: BaseEntity
     public string IngredientName { get; set; } = default!;
     [Required(ErrorMessage = "The field {0} is required")]
     [MaxLength(50)]
-    public string State { get; set; } = default!;
+    public string? State { get; set; }
+    public float? Density { get; set; }
     
-    public float? Density { get; set; } = default!;
+    public float? AmountInStock { get; set; } = default!;
 
     public ICollection<IngredientInRecipe>? IngredientInRecipes { get; set; }
     public ICollection<IngredientInCategory>? IngredientInCategories { get; set; }

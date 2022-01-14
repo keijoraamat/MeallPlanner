@@ -10,6 +10,8 @@ public class IngredientInRecipe: BaseEntity
     [Required(ErrorMessage = "The field {0} is required")]
     [MaxLength(1026)]
     public string Comment { get; set; } = default!;
+    
+    public int? Order { get; set; } = default!;
 
     public int RecipeId { get; set; }
     public Recipe? Recipe { get; set; }
