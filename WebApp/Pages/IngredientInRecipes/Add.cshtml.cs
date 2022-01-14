@@ -14,6 +14,7 @@ namespace WebApp.Pages.IngredientInRecipes
     public class CreateModel : PageModel
     {
         private readonly WebApp.DAL.AppDbContext _context;
+        public List<SelectList> RecipeTitles { get; set; }
 
         public CreateModel(WebApp.DAL.AppDbContext context)
         {
@@ -23,7 +24,8 @@ namespace WebApp.Pages.IngredientInRecipes
         public IActionResult OnGet()
         {
         ViewData["IngredientId"] = new SelectList(_context.Ingredients, "Id", "IngredientName");
-        ViewData["RecipeId"] = new SelectList(_context.Recipes, "Id", "Description");
+        ViewData["RecipeTitle"] = new SelectList(_context.Recipes, "Id", "Title");
+        //RecipeTitles.Add( new SelectListItem(_context.Recipes,"Id", "Title"));
             return Page();
         }
 

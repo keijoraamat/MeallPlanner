@@ -58,11 +58,7 @@ public class IndexModel : PageModel
 
         else if (!string.IsNullOrWhiteSpace(searchIngredient) && string.IsNullOrEmpty(searchNotIngredient))
         {
-            var searchIngredients = searchIngredient.Trim().Split(",");
-            for (var i = 0; i < searchIngredients.Length; i++)
-            {
-                searchIngredients[i] = searchIngredients[i].Trim();
-            }
+            var searchIngredients = SplitAndTrimSearchItems(searchIngredient);
 
             // get data from db to memory
             Recipe = await recipeQuery.ToListAsync();
@@ -77,11 +73,7 @@ public class IndexModel : PageModel
 
         else if (!string.IsNullOrWhiteSpace(searchNotIngredient) && string.IsNullOrEmpty(searchIngredient))
         {
-            var searchIngredients = searchNotIngredient.Trim().Split(",");
-            for (var i = 0; i < searchIngredients.Length; i++)
-            {
-                searchIngredients[i] = searchIngredients[i].Trim();
-            }
+            var searchNotIngredients = SplitAndTrimSearchItems(searchNotIngredient);
 
             // get data from db to memory
             Recipe = await recipeQuery.ToListAsync();
@@ -89,27 +81,31 @@ public class IndexModel : PageModel
             // filter it in memory
             Recipe = Recipe.Where(r =>
                     !r.IngredientInRecipes!.Any(i =>
-                        searchIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
+                        searchNotIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
                 .ToList();
         }
 
         else if (!string.IsNullOrWhiteSpace(searchIngredient) && !string.IsNullOrEmpty(searchNotIngredient))
         {
-            var searchIngredients = searchIngredient.Trim().Split(",");
-            var searchnotIngredients = searchNotIngredient.Trim().Split(",");
-            for (var i = 0; i < searchIngredients.Length; i++)
-            {
-                searchIngredients[i] = searchIngredients[i].Trim();
-            }
+            var searchIngredients = SplitAndTrimSearchItems(searchIngredient);
+            var searchNotIngredients = SplitAndTrimSearchItems(searchNotIngredient);
 
+
+            Recipe = new List<Recipe>();
             // get data from db to memory
             Recipe = await recipeQuery.ToListAsync();
 
             // filter it in memory
-            Recipe = Recipe.Where(r =>
+            var rejectList = Recipe.Where(r =>
+                    !r.IngredientInRecipes!.Any(i =>
+                        searchNotIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
+                .ToList();
+            Recipe = rejectList.Where(r =>
                     r.IngredientInRecipes!.Any(i =>
                         searchIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
                 .ToList();
+
+            //Recipe = rejectList.Except(fullList).ToList();
         }
 
         else if (searchTime != null)
@@ -123,5 +119,17 @@ public class IndexModel : PageModel
         {
             Recipe = await recipeQuery.ToListAsync();
         }
+    }
+
+    private static string[] SplitAndTrimSearchItems(string searchIngredient)
+    {
+        var searchIngredients = searchIngredient.Trim().Split(",");
+
+        for (var i = 0; i < searchIngredients.Length; i++)
+        {
+            searchIngredients[i] = searchIngredients[i].Trim();
+        }
+
+        return searchIngredients;
     }
 }

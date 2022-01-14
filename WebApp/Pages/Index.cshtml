@@ -13,22 +13,22 @@
             </div>
             <div class="mb-3">
                 <label for="searchIngredient" class="form-label">Ingredients (comma separated list)</label>
-                <input type="text" class="form-control border-success" id="searchIngredient" name="searchIngredient" placeholder="sugar, milk"  value="@Model.SearchIngredient">
+                <input type="text" class="form-control border-success" id="searchIngredient" name="searchIngredient" placeholder="sugar, milk" value="@Model.SearchIngredient">
             </div>
             <div class="mb-3">
                 <label for="searchNotIngredient" class="form-label">Ingredients NOT in the recipie</label>
-                <input type="text" class="form-control border-danger" id="searchNotIngredient" name="searchNotIngredient" placeholder="E621"  value="@Model.SearchNotIngredient">
+                <input type="text" class="form-control border-danger" id="searchNotIngredient" name="searchNotIngredient" placeholder="E621" value="@Model.SearchNotIngredient">
             </div>
             <div class="mb-3">
                 <label for="searchTime" class="form-label">Preparation time (in minutes)</label>
-                <input type="number" class="form-control" id="searchTime" name="searchTime" placeholder="15"  value="@Model.SearchTime">
+                <input type="number" class="form-control" id="searchTime" name="searchTime" placeholder="15" value="@Model.SearchTime">
             </div>
 
         </div>
         <div class="col-2 position-relative">
             <div class="form-group position-absolute bottom-0 start-0">
                 <input type="submit" value="Search" name="action" class="btn btn-primary"/>
-                @if (Model.SearchIngredient != null || Model.SearchName != null)
+                @if (Model.SearchIngredient != null || Model.SearchName != null || Model.SearchNotIngredient != null || Model.SearchTime != null)
                 {
                     <input type="submit" value="Clear" name="action" class="btn btn-warning"/>
                 }
