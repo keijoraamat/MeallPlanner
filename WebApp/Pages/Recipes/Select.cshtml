@@ -1,0 +1,75 @@
+@page
+@using WebApp.Domain
+@model WebApp.Pages.Recipes.Select
+@{
+    ViewData["Title"] = "SelectedRecipe";
+}
+
+<h2>Recipe</h2>
+
+<div>
+    <h1>@Model.Recipe.Title</h1>
+    <hr/>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Ingredient</th>
+            <th>Amount in recipe</th>
+            <th>Amount in stock</th>
+            <th>State</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        @for (var i = 0; i < Model.Ingredients.Count; i++)
+        {
+            <tr>
+                <th scope="row">@Model.Ingredients[i].IngredientName</th>
+                <td>@Model.RecipeAmounts[i]</td>
+                <td>@Model.Ingredients[i].AmountInStock</td>
+                <td>@Model.Ingredients[i].State</td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Recipe.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Recipe.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Recipe.Instructions)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Recipe.Instructions)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Recipe.DefaultServings)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Recipe.DefaultServings)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Recipe.PrepMinutes)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Recipe.PrepMinutes)
+        </dd>
+    </dl>
+    
+    <form method="get" action="/Recipes/Select" id="selectForm">
+    <input type="hidden" name="id" value="@Model.Recipe.Id"/>
+            <label for="servings" class="form-label">How many shall be fed?</label>
+            <input type="number" class="form-control" id="servings" name="servings" placeholder="666" value="@Model.Servings">
+    <input type="submit" value="Update amounts" class="btn btn-secondary"/>
+    </form>
+
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Recipe.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

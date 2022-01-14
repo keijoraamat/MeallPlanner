@@ -65,8 +65,7 @@ public class IndexModel : PageModel
 
             // filter it in memory
             Recipe = Recipe.Where(r =>
-                    r.IngredientInRecipes!.Any(i =>
-                        searchIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
+                    r.IngredientInRecipes!.Any(i => searchIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
                 .ToList();
         }
 
@@ -104,8 +103,64 @@ public class IndexModel : PageModel
                     r.IngredientInRecipes!.Any(i =>
                         searchIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
                 .ToList();
+        }
+        else if (!string.IsNullOrWhiteSpace(searchIngredient) && !string.IsNullOrEmpty(searchNotIngredient) && !string.IsNullOrEmpty(searchName))
+        {
+            var searchIngredients = SplitAndTrimSearchItems(searchIngredient);
+            var searchNotIngredients = SplitAndTrimSearchItems(searchNotIngredient);
 
-            //Recipe = rejectList.Except(fullList).ToList();
+
+            Recipe = new List<Recipe>();
+            
+            searchName = searchName.Trim();
+            recipeQuery = recipeQuery.Where(r =>
+                r.Title.ToUpper().Contains(searchName.ToUpper()) ||
+                r.Description.ToUpper().Contains(searchName.ToUpper()));
+            Recipe = await recipeQuery.ToListAsync();
+            
+            // get data from db to memory
+            Recipe = await recipeQuery.ToListAsync();
+
+            // filter it in memory
+            var rejectList = Recipe.Where(r =>
+                    !r.IngredientInRecipes!.Any(i =>
+                        searchNotIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
+                .ToList();
+            Recipe = rejectList.Where(r =>
+                    r.IngredientInRecipes!.Any(i =>
+                        searchIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
+                .ToList();
+        }
+        else if (!string.IsNullOrWhiteSpace(searchIngredient) 
+                 && !string.IsNullOrEmpty(searchNotIngredient) 
+                 && !string.IsNullOrEmpty(searchName)
+                 && searchTime != null)
+        {
+            var searchIngredients = SplitAndTrimSearchItems(searchIngredient);
+            var searchNotIngredients = SplitAndTrimSearchItems(searchNotIngredient);
+
+
+            Recipe = new List<Recipe>();
+            
+            searchName = searchName.Trim();
+            recipeQuery = recipeQuery.Where(r =>
+                r.Title.ToUpper().Contains(searchName.ToUpper()) ||
+                r.Description.ToUpper().Contains(searchName.ToUpper()));
+            Recipe = await recipeQuery.ToListAsync();
+            
+            // get data from db to memory
+            Recipe = await recipeQuery.ToListAsync();
+
+            // filter it in memory
+            var rejectList = Recipe.Where(r =>
+                    !r.IngredientInRecipes!.Any(i =>
+                        searchNotIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
+                .ToList();
+            var stringlessList = rejectList.Where(r =>
+                    r.IngredientInRecipes!.Any(i =>
+                        searchIngredients.Any(s => i.Ingredient!.IngredientName.ToUpper().Contains(s.ToUpper()))))
+                .ToList();
+            Recipe = stringlessList.Where(r => r.PrepMinutes <= searchTime).ToList();
         }
 
         else if (searchTime != null)

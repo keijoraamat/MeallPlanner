@@ -20,7 +20,7 @@
                 <input type="text" class="form-control border-danger" id="searchNotIngredient" name="searchNotIngredient" placeholder="E621" value="@Model.SearchNotIngredient">
             </div>
             <div class="mb-3">
-                <label for="searchTime" class="form-label">Preparation time (in minutes)</label>
+                <label for="searchTime" class="form-label">MAX preparation time (in minutes)</label>
                 <input type="number" class="form-control" id="searchTime" name="searchTime" placeholder="15" value="@Model.SearchTime">
             </div>
 
@@ -70,6 +70,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DefaultServings)
+            </td>
+            <td>
+                <form  method="get" action="/Recipes/Select" id="selectForm" >
+                                    <input type="hidden" name="id" value="@item.Id"/>
+                                    <input type="submit" value="Select" class="btn btn-success"/>
+                                </form>
             </td>
             <td>
                 <a asp-page="/Recipes/Edit" asp-route-id="@item.Id">Edit</a> |
