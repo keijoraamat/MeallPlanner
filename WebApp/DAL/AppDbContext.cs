@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DAL;
+namespace WebApp.DAL;
 
 public class AppDbContext: DbContext
 {
