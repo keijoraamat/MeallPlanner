@@ -8,7 +8,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Add">Add New</a>
 </p>
 <table class="table">
     <thead>
@@ -26,10 +26,10 @@
 @foreach (var item in Model.IngredientInCategory) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                @Html.DisplayFor(modelItem => item.Category!.CategoryName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ingredient.IngredientName)
+                @Html.DisplayFor(modelItem => item.Ingredient!.IngredientName)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

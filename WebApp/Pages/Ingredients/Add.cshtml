@@ -19,6 +19,11 @@
                 <span asp-validation-for="Ingredient.IngredientName" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Ingredient.AmountInStock" class="control-label"></label>
+                <input asp-for="Ingredient.AmountInStock" class="form-control" />
+                <span asp-validation-for="Ingredient.AmountInStock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Ingredient.State" class="control-label"></label>
                 <input asp-for="Ingredient.State" class="form-control" />
                 <span asp-validation-for="Ingredient.State" class="text-danger"></span>
@@ -29,7 +34,7 @@
                 <span asp-validation-for="Ingredient.Density" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
             </div>
         </form>
     </div>

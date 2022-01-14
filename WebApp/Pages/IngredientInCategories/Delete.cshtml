@@ -16,13 +16,13 @@
             @Html.DisplayNameFor(model => model.IngredientInCategory.Category)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IngredientInCategory.Category.CategoryName)
+            @Html.DisplayFor(model => model.IngredientInCategory.Category!.CategoryName)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IngredientInCategory.Ingredient)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IngredientInCategory.Ingredient.IngredientName)
+            @Html.DisplayFor(model => model.IngredientInCategory.Ingredient!.IngredientName)
         </dd>
     </dl>
     
